@@ -7,6 +7,7 @@ public class StartGame {
         int playerid;
         int winnercode=1;
         Player p= new Player();
+
         Die m1= new Die();
         Die m2=new Die();
         Board b=new Board();
@@ -21,13 +22,16 @@ public class StartGame {
 
         }
 
-
+        b.setSquares();
         b.setPlayers(playernumber);
-
+        int ax;
         while(true) {
             playerid=0;
+            s=b.squareArr.get(10);
+            System.out.println(s.getname());
             for(int i=0;i<playernumber;i++) {
                 p = b.playerArr.get(playerid);
+
                 System.out.println(p.name+"'s turn");
                 System.out.println("Dice is rolling");
                 totaldice=m1.getFaceValue()+m2.getFaceValue();
@@ -35,7 +39,8 @@ public class StartGame {
                 System.out.println(p.name+" moves from "+p.getCurrentplace()+" to "+(p.getCurrentplace()+totaldice)+"\n");
                 p.setCurrentplace(p.getCurrentplace()+totaldice);
                 playerid++;
-                if(p.getCurrentplace()>=50) {
+                System.out.println(ax);
+                if(p.getCurrentplace()>=20) {
                     System.out.println("\n\n------------------------\n"+p.name + " WINSSSSS "+"\n------------------------");
                     winnercode=0;
                     break;

@@ -1,5 +1,7 @@
 
 public class Player {
+
+    String playername;
     public String name;
     private int currentplace;
     public int getCurrentplace() {

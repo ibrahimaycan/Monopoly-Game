@@ -4,9 +4,11 @@ import java.util.Scanner;
 public class Board {
 
     public ArrayList<Player> playerArr;
+    public ArrayList<Square> squareArr;
+
     public Board(){
         playerArr=new ArrayList<Player>();
-        System.out.println(playerArr);
+        squareArr=new ArrayList<Square>();
     }
     public void setPlayers(int numOfPlayers){
         String name;
@@ -21,5 +23,23 @@ public class Board {
         }
         input.close();
     }
+
+    public void setSquares(){
+        for(int i=0;i<40;i++){
+            if(i==0){
+               squareArr.add(new GoSquare(i));
+            }
+            else if (i==10){
+                squareArr.add(new JailSquare(i));
+            }
+            else{
+                squareArr.add(new RegularSquare(i));
+            }
+
+
+        }
+
+    }
+
 
 }
