@@ -3,6 +3,11 @@ public class RegularSquare extends Square {
 
         super.setname("Regular Square");
         super.setlocation(index);
+
+    }
+    @Override
+    public void action(Player p,int d1,int d2){
+
     }
 
 }
