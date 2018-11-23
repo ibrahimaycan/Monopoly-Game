@@ -2,54 +2,92 @@
 import java.util.Scanner;
 
 public class StartGame {
-    public void start() {
-        int totaldice;
-        int playerid;
-        int winnercode=1;
-        Player p= new Player();
 
-        Die m1= new Die();
-        Die m2=new Die();
-        Board b=new Board();
+    private static Die die1 = new Die();
+    private static Die die2 = new Die();
+    private static int totaldice;
+    private static int playerid;
+    private static int turn = 0;
+    private static Player p = new Player();
+    private static Board b = new Board();
+    private static int playernumber;
+
+    public void start() {
         Scanner input = new Scanner(System.in);
-        int playernumber;
-        while(true){
+
+        while (true) {
             System.out.println("Enter the number of players");
-            playernumber=input.nextInt();
-            if(playernumber>=2&&playernumber<=8)
+            playernumber = input.nextInt();
+            if (playernumber >= 1 && playernumber <= 8)
                 break;
             System.out.println("You can play this game at least 2 player and at most 8 player");
-
         }
-
         b.setSquares();
         b.setPlayers(playernumber);
-        int ax;
-        while(true) {
-            playerid=0;
-            s=b.squareArr.get(10);
-            System.out.println(s.getname());
-            for(int i=0;i<playernumber;i++) {
-                p = b.playerArr.get(playerid);
 
-                System.out.println(p.name+"'s turn");
+        while (true) {
+            playerid = 0;
+            turn++;
+            for (int i = 0; i < playernumber; i++) {/// this is where game is playing
+                p = b.playerArr.get(playerid);
+                die1.setFace();
+                die2.setFace();
+                System.out.println("\nTurn :" + turn);
+                System.out.println(p.getName() + "'s turn");
                 System.out.println("Dice is rolling");
-                totaldice=m1.getFaceValue()+m2.getFaceValue();
-                System.out.println("total dice value is "+totaldice);
-                System.out.println(p.name+" moves from "+p.getCurrentplace()+" to "+(p.getCurrentplace()+totaldice)+"\n");
-                p.setCurrentplace(p.getCurrentplace()+totaldice);
-                playerid++;
-                System.out.println(ax);
-                if(p.getCurrentplace()>=20) {
-                    System.out.println("\n\n------------------------\n"+p.name + " WINSSSSS "+"\n------------------------");
-                    winnercode=0;
-                    break;
+                if (p.isInJail() == true) {
+                    b.squareArr.get(10).action(p, die1.getFaceValue(), die2.getFaceValue());
+                    if (p.isInJail() == true)
+                        break;
+
                 }
+                totaldice = die1.getFaceValue() + die2.getFaceValue();
+                System.out.println("Total dice value is " + totaldice);
+
+//---------------------------------------------------------------------------------------------
+                if ((p.getCurrentplace() + totaldice >= 40)) {
+                    p.money.addMoney(200);
+                    ///player complates one tour
+                    System.out.println("Player " + p.getName() + " compleated 1 tour.Take $200 from the bank");
+                    p.setCurrentplace(p.getCurrentplace() - 40);
+                    System.out.println("Current place is " + (p.getCurrentplace() + 40) + "\n" + p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace() + 40).getname() + " to " + b.squareArr.get(p.getCurrentplace()
+                            + totaldice).getname());
+
+                    b.move(p, totaldice);
+
+                    System.out.println("New place is " + p.getCurrentplace());
+
+                } else {
+                    System.out.println("Current place is " + p.getCurrentplace() + "\n" + p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace()).getname() + " to " + b.squareArr.get(p.getCurrentplace()
+                            + totaldice).getname());
+                    b.move(p, totaldice);
+
+                    System.out.println("New place is " + p.getCurrentplace());
+                }
+//---------------------------------------------------------------------------------------------
+
+                if (p.getCurrentplace() == 4) {
+                    b.squareArr.get(4).action(p, die1.getFaceValue(), die2.getFaceValue());
+
+                }
+
+                if (p.getCurrentplace() == 10) {     //if player is in jail then waits 3 turn
+                    p.setInJail(true);
+                }
+                if (p.getCurrentplace() == 20) {
+                    b.squareArr.get(20).action(p, die1.getFaceValue(), die2.getFaceValue());
+                }
+                if (p.getCurrentplace() == 30) {
+                    b.squareArr.get(30).action(p, die1.getFaceValue(), die2.getFaceValue());
+                }
+                System.out.println("Total cash is $" + p.money.getAmount());
+
+                playerid++;
             }
-            if(winnercode==0) {
+            if (turn == 29)
                 break;
-            }
+
+            input.close();
         }
-        input.close();
     }
 }
