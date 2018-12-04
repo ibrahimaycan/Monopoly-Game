@@ -61,36 +61,23 @@ public class StartGame {
                     ///player complates one tour
                     System.out.println("Player " + p.getName() + " compleated 1 tour.Take $200 from the bank");
                     p.setCurrentplace(p.getCurrentplace() - 40);
-                    System.out.println("Current place is " + (p.getCurrentplace() + 40) + "\n" + p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace() + 40).getname() + " to " + b.squareArr.get(p.getCurrentplace()
-                            + totaldice).getname());
-
-                    b.move(p, totaldice);
-
-                    System.out.println("New place is " + p.getCurrentplace());
-
-                } else {
-                    System.out.println("Current place is " + p.getCurrentplace() + "\n" + p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace()).getname() + " to " + b.squareArr.get(p.getCurrentplace()
+                    System.out.println(p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace() + 40).getname() + " to " + b.squareArr.get(p.getCurrentplace()
                             + totaldice).getname());
                     b.move(p, totaldice);
-
-                    System.out.println("New place is " + p.getCurrentplace());
+                } else
+                    {
+                    System.out.println(p.getName() + " moves from " + b.squareArr.get(p.getCurrentplace()).getname() + " to " + b.squareArr.get(p.getCurrentplace()
+                            + totaldice).getname());
+                    b.move(p, totaldice);
                 }
 //---------------------------------------------------------------------------------------------
-
-                if (p.getCurrentplace() == 4) {
-                    b.squareArr.get(4).action(p, die1.getFaceValue(), die2.getFaceValue());
-
-                }
 
                 if (p.getCurrentplace() == 10) {     //if player is in jail then waits 3 turn
                     p.setInJail(true);
                 }
-                if (p.getCurrentplace() == 20) {
-                    b.squareArr.get(20).action(p, die1.getFaceValue(), die2.getFaceValue());
-                }
-                if (p.getCurrentplace() == 30) {
-                    b.squareArr.get(30).action(p, die1.getFaceValue(), die2.getFaceValue());
-                }
+                else
+                b.squareArr.get(p.getCurrentplace()).action(p,die1.getFaceValue(),die2.getFaceValue());
+
                 System.out.println("Total cash is $" + p.money.getAmount());
 
                 playerid++;
