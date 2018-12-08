@@ -91,6 +91,9 @@ public class StartGame {
         for (int j =0;j<playernumber;j++){
             p = b.playerArr.get(j);
             System.out.println(p.getName()+" has "+p.money.getAmount()+" cash. ");
+            
+            
+            
         }
 
     }
