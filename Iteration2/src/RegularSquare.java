@@ -7,7 +7,5 @@ public class RegularSquare extends Square {
     }
     @Override
     public void action(Player p,int d1,int d2){
-
     }
-
 }
