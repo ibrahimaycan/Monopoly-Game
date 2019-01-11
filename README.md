@@ -1,4 +1,4 @@
 
 MONOPOLY GAME 
 ==========
-CSE3063 Monopoly Game with java 
+Monopoly Game with JAVA 
